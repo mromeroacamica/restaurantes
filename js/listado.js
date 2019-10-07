@@ -89,6 +89,7 @@ Listado.prototype.obtenerRestaurantes = function(filtroRubro, filtroCiudad, filt
     var restaurantesFiltrados = this.restaurantes;
     if (filtroRubro !== null) {
         restaurantesFiltrados = restaurantesFiltrados.filter(restaurant => restaurant.rubro == filtroRubro);
+        // console.log(restaurantesFiltrados)
     }
 
     if (filtroCiudad !== null) {

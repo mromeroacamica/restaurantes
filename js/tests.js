@@ -78,3 +78,27 @@ describe('Testeá la función buscarRestaurante(id)', function(){
         expect(busquedaEsperadaCorrecta).to.be.eql(listadoDeRestaurantes[0])
     })
 })
+
+//Testeá la función obtenerRestaurantes() Testeá la función obtenerRestaurantes() para comprobar su funcionamiento. En este paso, podés elegir vos la pruebas que quieras hacer.
+describe('Testeá la función obtenerRestaurantes()', function(){
+    it('Testea el filtro Rubro null no afecte al filtro de restaurantes', function(){
+        let listadoFiltaradoRubroNull=listado.obtenerRestaurantes(null, null, null);
+        expect(listadoFiltaradoRubroNull).to.eql(listado.restaurantes)
+    });
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null los otros dos parametros', function(){
+        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", null, null);
+        expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[6], listadoDeRestaurantes[8], listadoDeRestaurantes[14], listadoDeRestaurantes[15], listadoDeRestaurantes[16]])
+    });
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroCiudad, y filtroHorario asumir un valor', function(){
+        let listadoFiltaradoRubroPasta12hs=listado.obtenerRestaurantes("Pasta", null, '12:00');
+        expect(listadoFiltaradoRubroPasta12hs).to.eql([listadoDeRestaurantes[16]])
+    });
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroHorario, y filtroCiudad asumir un valor', function(){
+        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", 'Berlín', null);
+        expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[16]])
+    });
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, filtroHorario y filtroCiudad asuman un valor', function(){
+        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", 'Berlín', '12:00');
+        expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[16]])
+    });
+})
