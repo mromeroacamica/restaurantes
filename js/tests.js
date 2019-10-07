@@ -21,12 +21,12 @@ describe('Test de la función reservarHorario(horario)', function () {
 // Testeá la función obtenerPuntuación()
 describe('Testeá la función obtenerPuntuación()', function () {
     it('Dado un restaurant con determinadas calificaciones, la puntuación (que es el promedio de ellas) se calcula correctamente', function () {
-        var puntuacionEsperada = listadoDeRestaurantes[0].obtenerPuntuacion();
+        let puntuacionEsperada = listadoDeRestaurantes[0].obtenerPuntuacion();
         expect(puntuacionEsperada).to.be.equal(7.4);
     })
     it('Dado un restaurant que no tiene ninguna calificación, la puntuación es igual a 0', function () {
         listadoDeRestaurantes[0].calificaciones = [];
-        var puntuacionEsperada = listadoDeRestaurantes[0].obtenerPuntuacion();
+        let puntuacionEsperada = listadoDeRestaurantes[0].obtenerPuntuacion();
         expect(puntuacionEsperada).to.be.equal(0);
     })
 
@@ -36,26 +36,45 @@ describe('Testeá la función obtenerPuntuación()', function () {
 describe('Testeá la función calificar()', function () {
     it('Cuando se califica un restaurant y su valor es menos que 0, no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(-1);
-        var calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant y su valor es mayor a 10, no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(15);
-        var calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant, y su calificación  es nulo y no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(' ');
-        var calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant, se agrega la calificacion al arreglo', function () {
         listadoDeRestaurantes[1].calificar(5);
-        var calificacionesEsperada= listadoDeRestaurantes[1].calificaciones;
+        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.eql([7, 7, 3, 9, 7, 5]);
+    })
+})
+
+//Testeá la función buscarRestaurante(id)
+describe('Testeá la función buscarRestaurante(id)', function(){
+    it('Cuando se busca un restaurant que no existe, Listado muestra mensaje', function(){
+        let busquedaEsperada = listado.buscarRestaurante(0)
+        // console.log(ListadoEsperado);
+        expect(busquedaEsperada).to.be.equal('No se ha encontrado ningún restaurant')
+    });
+    it('Cuando se busca un restaurant null, Listado muestra mensaje', function(){
+        let busquedaEsperadaNula = listado.buscarRestaurante(' ')
+        // console.log(ListadoEsperado);
+        expect(busquedaEsperadaNula).to.be.equal('No se ha encontrado ningún restaurant')
+    });
+    it('Cuando se busca un restaurant, Listado lo muestra', function(){
+        let busquedaEsperadaCorrecta = listado.buscarRestaurante(1)
+        // console.log(ListadoEsperado);
+        expect(busquedaEsperadaCorrecta).to.be.eql(listadoDeRestaurantes[0])
     })
 })
