@@ -22,7 +22,7 @@ describe('Test de la función reservarHorario(horario)', function () {
 describe('Testeá la función obtenerPuntuación()', function () {
     it('Dado un restaurant con determinadas calificaciones, la puntuación (que es el promedio de ellas) se calcula correctamente', function () {
         let puntuacionEsperada = listadoDeRestaurantes[0].obtenerPuntuacion();
-        expect(puntuacionEsperada).to.be.equal(7.4);
+        expect(puntuacionEsperada).to.be.equal(7);
     })
     it('Dado un restaurant que no tiene ninguna calificación, la puntuación es igual a 0', function () {
         listadoDeRestaurantes[0].calificaciones = [];
