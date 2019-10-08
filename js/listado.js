@@ -18,42 +18,55 @@ Listado.prototype.calificarRestaurant = function(id, calificacion) {
 
 //Dado un id, busca el objeto del listado que tiene ese id
 Listado.prototype.buscarRestaurante = function(id) {
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        if (this.restaurantes[i].id === id) {
-            return this.restaurantes[i]
-        }
+    var prueba = this.restaurantes.find(function(resto){
+    // console.log(prueba)
+    return  resto.id === id;
+    });
+    if(prueba){
+        return prueba
+
     }
     return "No se ha encontrado ningún restaurant";
 }
+    // for (var i = 0; i < this.restaurantes.length; i++) {
+    //     if (this.restaurantes[i].id === id) {
+    //         return this.restaurantes[i]
+    //     }
+    // }
+
 
 //Obtiene todas las ciudades de los restaurantes sin repetidos
-Listado.prototype.obtenerUbicaciones = function() {
-    //Array donde se van a ir agregando las ciudades (van a estar repetidas)
-    var c = [];
-    //Se recorre el array de restaurantes y se va agregando al array creado, todas las ubicaciones o ciudades encontradas
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        c.push(this.restaurantes[i].ubicacion);
-    }
-    //Se crea un nuevo array donde se van a agregar las ciudades pero sin repetirse
-    var c2 = c.filter(function(elem, index, self) {
+function filtro (resto){
+    var filtrado =resto.filter(function(elem,index,self){
         return index === self.indexOf(elem);
     });
+    // console.log(filtrado);
+    return filtrado.sort();
+}
+function recorrer(resto, categoria){
+    var nuevoArrayCategoria = [resto[categoria]];
+    return nuevoArrayCategoria;
+}
 
-    return c2.sort();
+Listado.prototype.obtenerUbicaciones = function() {
+    //Array donde se van a ir agregando las ciudades (van a estar repetidas)
+    // console.log(this.restaurantes);
+    var ciudad=this.restaurantes.map(function(resto) {
+        return resto.ubicacion;
+    })
+    // console.log(c);
+    
+    var resultadoFiltro = filtro(ciudad);
+    return resultadoFiltro;
 }
 
 //Obtiene todos los rubros de los restaurantes sin repetidos. Su funcionamiento es similar a obtC()
 Listado.prototype.obtenerRubros = function() {
-    var r = [];
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        r.push(this.restaurantes[i].rubro);
-    }
-
-    var r2 = r.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
-
-    return r2.sort();
+    var rubro=this.restaurantes.map(function(resto) {
+        return resto.rubro;
+    })
+    var resultadoFiltro = filtro(rubro);
+    return resultadoFiltro;
 }
 
 //Obtiene todos los horarios de los restaurantes (sin repetidos). Está funcionalidad es un poco más compleja ya que un restaurante
@@ -61,26 +74,20 @@ Listado.prototype.obtenerRubros = function() {
 //convertir en uno solo
 Listado.prototype.obtenerHorarios = function() {
     //En este array se van a cargar los arrays de horarios, que luego vamos convertir en un solo array
-    var arregloH = [];
-    //Recorremos el array de restaurantes y vamos agregando todos los array de horarios
-    for (var i = 0; i < this.restaurantes.length; i++) {
-        arregloH.push(this.restaurantes[i].horarios);
-    }
+    var arregloHorarios = this.restaurantes.map(function(resto) {
+        return resto.horarios;
+    })
 
     //En este arreglo vamos a poner todos los horarios, uno por uno
-    var h = [];
-    arregloH.forEach(function(a) {
-        a.forEach(function(hor) {
-            h.push(hor)
+    var todosLosHorarios = [];
+    
+    arregloHorarios.forEach(function(arrayHorarios) {
+        arrayHorarios.forEach(function(hor) {
+            todosLosHorarios.push(hor)
         });
     });
-
-    //En este arreglo vamos a poner todos los horarios pero sin repetidos
-    var h2 = h.filter(function(elem, index, self) {
-        return index === self.indexOf(elem);
-    });
-
-    return h2.sort();
+    var resultadoFiltro = filtro(todosLosHorarios);
+    return resultadoFiltro;
 }
 
 //Función que recibe los filtros que llegan desde el HTML y filtra el arreglo de restaurantes.
