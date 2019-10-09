@@ -102,3 +102,11 @@ describe('Testeá la función obtenerRestaurantes()', function(){
         expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[16]])
     });
 })
+
+//Testeá los nuevos requerimientos de la aplicacion.
+describe('Testea las nuevas funcionalidades de la aplicacion, atributos que se le incorporan a la reserva', function(){
+    it('testea que un restaurante calcule correctamente su precio base', function(){
+    let precioBaseReserva1 = reserva1.precioBase();
+    expect(precioBaseReserva1).to.be.equal(2800);    
+    })
+})
