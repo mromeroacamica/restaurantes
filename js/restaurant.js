@@ -61,41 +61,66 @@ Reserva.prototype.precioBase = function () {
     var calculo = this.cantidadDePersonas * this.precioPorPersona
     return calculo
 }
-Reserva.prototype.precioFinal = function () {
+
+
+function calcularAdicionalesPorTodo(reserva) {
     let adicionalesHorarios = 0;
     let adicionalesFinDeSemanas = 0;
-    let descuentoCantidadPersonas = 0;
-    let calculoDescuentoPersonas=0;
-    // console.log(this.horario)
-    if (this.horario.getHours() > 13 && this.horario.getHours() < 14 || this.horario.getHours() > 20 && this.horario.getHours() < 21) {
-        // console.log(this.horario.getHours())
-        let calculoAdicionalHorario = this.precioBase() * 0.05;
+
+    // console.log(reserva)
+    if (reserva.horario.getHours() >= 13 && reserva.horario.getHours() <= 14 || reserva.horario.getHours() >= 20 && reserva.horario.getHours() <= 21) {
+        // console.log(reserva.horario.getHours())
+        let calculoAdicionalHorario = reserva.precioBase() * 0.05;
         adicionalesHorarios = calculoAdicionalHorario;
         // console.log(calculoAdicionalHorario)
         // console.log(adicionalesHorarios)
     }
-    if (this.horario.getDay() === 5 || this.horario.getDay() === 6 || this.horario.getDay() === 7) {
-        let calculoAdicionalFinDe = this.precioBase() * 0.1;
+    if (reserva.horario.getDay() === 5 || reserva.horario.getDay() === 6 || reserva.horario.getDay() === 7) {
+        let calculoAdicionalFinDe = reserva.precioBase() * 0.1;
         adicionalesFinDeSemanas = calculoAdicionalFinDe;
         // console.log(calculoAdicionalFinDe)
         // console.log(adicionalesFinDeSemanas)
     }
-
     let totalAdicionales = adicionalesHorarios + adicionalesFinDeSemanas;
-// console.log(this.cantidadDePersonas)
-    // if (this.cantidadDePersonas >= 4 && this.cantidadDePersonas <= 6) {
-    //     calculoDescuentoPersonas = this.precioBase * 0.05;
-    //     descuentoCantidadPersonas = calculoDescuentoPersonas;
-    // } 
-    // else if (this.cantidadDePersonas >= 7 && this.cantidadDePersonas < 8) {
-    //     calculoDescuentoPersonas = this.precioBase * 0.1;
-    //     descuentoCantidadPersonas = calculoDescuentoPersonas;
-    // } 
-    // else if (this.cantidadDePersonas >= 8) {
-    //     calculoDescuentoPersonas = this.precioBase * 0.15;
-    //     descuentoCantidadPersonas = calculoDescuentoPersonas;
-    // }
-    let precioFinalTotal = this.precioBase() + totalAdicionales - descuentoCantidadPersonas;
+    // console.log(totalAdicionales)
+    return totalAdicionales
+}
+
+function descuentoPorTodo(reserva) {
+    let descuentoCantidadPersonas = 0;
+    let descuentoCodigo = 0;
+    let totalDescuentos = 0;
+
+    if (reserva.cantidadDePersonas >= 4 && reserva.cantidadDePersonas <= 6) {
+        descuentoCantidadPersonas = reserva.precioBase() * 0.05;
+    }
+    else if (reserva.cantidadDePersonas >= 7 && reserva.cantidadDePersonas < 8) {
+        descuentoCantidadPersonas = reserva.precioBase() * 0.1;
+    }
+    else if (reserva.cantidadDePersonas >= 8) {
+        descuentoCantidadPersonas = reserva.precioBase() * 0.15;
+    }
+    if (reserva.codigoDeDescuento === 'DES15') {
+        descuentoCodigo = reserva.precioBase() * 0.15;
+    }
+    else if (reserva.codigoDeDescuento === 'DES200') {
+        descuentoCodigo = 200;
+    }
+    else if (reserva.codigoDeDescuento === 'DES1') {
+        descuentoCodigo = reserva.precioPorPersona;
+    }
+    totalDescuentos = descuentoCantidadPersonas + descuentoCodigo;
+    // console.log(reserva)
+    // console.log(totalDescuentos)
+    return totalDescuentos
+}
+
+// descuentoPorTodo();
+
+
+Reserva.prototype.precioFinal = function () {
+    // console.log(this)
+    let precioFinalTotal = this.precioBase() + calcularAdicionalesPorTodo(this) - descuentoPorTodo(this);
     return precioFinalTotal;
 }
 

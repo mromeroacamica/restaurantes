@@ -36,43 +36,43 @@ describe('Testeá la función obtenerPuntuación()', function () {
 describe('Testeá la función calificar()', function () {
     it('Cuando se califica un restaurant y su valor es menos que 0, no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(-1);
-        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada = listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant y su valor es mayor a 10, no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(15);
-        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada = listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant, y su calificación  es nulo y no se modifica el arreglo', function () {
         listadoDeRestaurantes[1].calificar(' ');
-        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones.length;
+        let calificacionesEsperada = listadoDeRestaurantes[1].calificaciones.length;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.equal(5);
     });
     it('Cuando se califica un restaurant, se agrega la calificacion al arreglo', function () {
         listadoDeRestaurantes[1].calificar(5);
-        let calificacionesEsperada= listadoDeRestaurantes[1].calificaciones;
+        let calificacionesEsperada = listadoDeRestaurantes[1].calificaciones;
         // console.log(calificacionesEsperada);
         expect(calificacionesEsperada).to.be.eql([7, 7, 3, 9, 7, 5]);
     })
 })
 
 //Testeá la función buscarRestaurante(id)
-describe('Testeá la función buscarRestaurante(id)', function(){
-    it('Cuando se busca un restaurant que no existe, Listado muestra mensaje', function(){
+describe('Testeá la función buscarRestaurante(id)', function () {
+    it('Cuando se busca un restaurant que no existe, Listado muestra mensaje', function () {
         let busquedaEsperada = listado.buscarRestaurante(0)
         // console.log(ListadoEsperado);
         expect(busquedaEsperada).to.be.equal('No se ha encontrado ningún restaurant')
     });
-    it('Cuando se busca un restaurant null, Listado muestra mensaje', function(){
+    it('Cuando se busca un restaurant null, Listado muestra mensaje', function () {
         let busquedaEsperadaNula = listado.buscarRestaurante(' ')
         // console.log(ListadoEsperado);
         expect(busquedaEsperadaNula).to.be.equal('No se ha encontrado ningún restaurant')
     });
-    it('Cuando se busca un restaurant, Listado lo muestra', function(){
+    it('Cuando se busca un restaurant, Listado lo muestra', function () {
         let busquedaEsperadaCorrecta = listado.buscarRestaurante(1)
         // console.log(ListadoEsperado);
         expect(busquedaEsperadaCorrecta).to.be.eql(listadoDeRestaurantes[0])
@@ -80,33 +80,37 @@ describe('Testeá la función buscarRestaurante(id)', function(){
 })
 
 //Testeá la función obtenerRestaurantes() Testeá la función obtenerRestaurantes() para comprobar su funcionamiento. En este paso, podés elegir vos la pruebas que quieras hacer.
-describe('Testeá la función obtenerRestaurantes()', function(){
-    it('Testea el filtro Rubro null no afecte al filtro de restaurantes', function(){
-        let listadoFiltaradoRubroNull=listado.obtenerRestaurantes(null, null, null);
+describe('Testeá la función obtenerRestaurantes()', function () {
+    it('Testea el filtro Rubro null no afecte al filtro de restaurantes', function () {
+        let listadoFiltaradoRubroNull = listado.obtenerRestaurantes(null, null, null);
         expect(listadoFiltaradoRubroNull).to.eql(listado.restaurantes)
     });
-    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null los otros dos parametros', function(){
-        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", null, null);
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null los otros dos parametros', function () {
+        let listadoFiltaradoRubroPasta = listado.obtenerRestaurantes("Pasta", null, null);
         expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[6], listadoDeRestaurantes[8], listadoDeRestaurantes[14], listadoDeRestaurantes[15], listadoDeRestaurantes[16]])
     });
-    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroCiudad, y filtroHorario asumir un valor', function(){
-        let listadoFiltaradoRubroPasta12hs=listado.obtenerRestaurantes("Pasta", null, '12:00');
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroCiudad, y filtroHorario asumir un valor', function () {
+        let listadoFiltaradoRubroPasta12hs = listado.obtenerRestaurantes("Pasta", null, '12:00');
         expect(listadoFiltaradoRubroPasta12hs).to.eql([listadoDeRestaurantes[16]])
     });
-    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroHorario, y filtroCiudad asumir un valor', function(){
-        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", 'Berlín', null);
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, manteniendo null filtroHorario, y filtroCiudad asumir un valor', function () {
+        let listadoFiltaradoRubroPasta = listado.obtenerRestaurantes("Pasta", 'Berlín', null);
         expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[16]])
     });
-    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, filtroHorario y filtroCiudad asuman un valor', function(){
-        let listadoFiltaradoRubroPasta=listado.obtenerRestaurantes("Pasta", 'Berlín', '12:00');
+    it('Testea el filtro Rubro cuando asume un valor y lo filtra según dicho valor, filtroHorario y filtroCiudad asuman un valor', function () {
+        let listadoFiltaradoRubroPasta = listado.obtenerRestaurantes("Pasta", 'Berlín', '12:00');
         expect(listadoFiltaradoRubroPasta).to.eql([listadoDeRestaurantes[16]])
     });
 })
 
 //Testeá los nuevos requerimientos de la aplicacion.
-describe('Testea las nuevas funcionalidades de la aplicacion, atributos que se le incorporan a la reserva', function(){
-    it('testea que un restaurante calcule correctamente su precio base', function(){
-    let precioBaseReserva1 = reserva1.precioBase();
-    expect(precioBaseReserva1).to.be.equal(2800);    
+describe('Testea las nuevas funcionalidades de la aplicacion, atributos que se le incorporan a la reserva', function () {
+    it('testea que un restaurante calcule correctamente su precio base', function () {
+        let precioBaseReserva1 = reserva1.precioBase();
+        expect(precioBaseReserva1).to.be.equal(2800);
+    });
+    it('testea que un restaurante calcule correctamente su precio final', function () {
+        let precioFinalReserva1 = reserva1.precioFinal();
+        expect(precioFinalReserva1).to.be.equal(2310)
     })
 })
